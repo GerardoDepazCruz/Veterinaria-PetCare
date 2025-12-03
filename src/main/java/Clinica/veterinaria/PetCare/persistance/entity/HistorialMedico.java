@@ -5,44 +5,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "cita")
-public class Cita {
+@Table(name = "historial_medico")
+public class HistorialMedico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cita")
-    private Integer idCita;
+    @Column(name = "id_historial")
+    private Integer idHistorial;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String descripcion;
 
     @Column(nullable = false)
     private LocalDate fecha;
-
-    @Column(nullable = false)
-    private LocalTime hora;
-
-    @Enumerated(EnumType.STRING)
-    private EstadoCita estado = EstadoCita.pendiente;
 
     // Relación con Mascota
     @ManyToOne
     @JoinColumn(name = "id_mascota")
     private Mascota mascota;
 
-    // Relación con Servicio
-    @ManyToOne
-    @JoinColumn(name = "id_servicio")
-    private Servicio servicio;
-
     // Relación con Usuario (Veterinario)
     @ManyToOne
     @JoinColumn(name = "id_veterinario")
     private Usuario veterinario;
-
-    public enum EstadoCita {
-        pendiente, atendida, cancelada
-    }
 }
